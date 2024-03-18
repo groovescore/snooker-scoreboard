@@ -64,11 +64,11 @@ export class Fullscreen {
   }
 
   _save(enable: boolean): void {
-    localStorage.setItem('piste-on-piste-fullscreen', JSON.stringify(enable));
+    localStorage.setItem('groovescore-fullscreen', JSON.stringify(enable));
   }
 
   load(): void {
-    const fullscreen_json = localStorage.getItem('piste-on-piste-fullscreen');
+    const fullscreen_json = localStorage.getItem('groovescore-fullscreen');
     if (!fullscreen_json)
       return
 

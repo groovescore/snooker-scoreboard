@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Piste on Piste'
+project = 'Groovescore Snooker Scoreboard'
 copyright = '2022-2024, Jani Nikula'
 author = 'Jani Nikula'
 
@@ -18,8 +18,6 @@ extensions = []
 templates_path = ['_templates']
 exclude_patterns = ['_build']
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -27,9 +25,9 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 html_theme_options = {
-    'description': 'Three-player snooker rules and a scoreboard app',
+    'description': 'Groovescore Snooker Scoreboard',
     'extra_nav_links': {
         'Scoreboard App': 'latest.html',
-        'GitHub Project': 'https://github.com/jnikula/piste-on-piste',
+        'GitHub Project': 'https://github.com/groovescore/snooker-scoreboard',
     }
 }

@@ -16,7 +16,7 @@ function shuffle(array: any[]): any[] {
   return result;
 }
 
-type SavedName = {
+export type SavedName = {
   id: number;
   name: string;
 };
@@ -28,11 +28,11 @@ class Names {
     let names: SavedName[] = this._load();
 
     if (names) {
-      this.names = shuffle(names);
+      this.names = names;
     } else {
       names = [];
-      for (let i of [1,2,3])
-	names.push({ id: i, name: `Player ${i}`});
+      for (let i of [0, 1])
+	names.push({ id: i, name: `Player ${i + 1}`});
 
       this.names = names;
     }
@@ -44,14 +44,14 @@ class Names {
 
   // load names from local storage
   _load(): SavedName[] {
-    let names_json = localStorage.getItem('piste-on-piste-names');
+    let names_json = localStorage.getItem('groovescore-names');
     if (!names_json)
       return null;
 
     try {
       let names = JSON.parse(names_json);
 
-      if (!Array.isArray(names) || names.length != 3)
+      if (!Array.isArray(names) || names.length != 2)
 	return null;
 
       return names;
@@ -61,20 +61,20 @@ class Names {
   }
 
   _save(): void {
-    localStorage.setItem('piste-on-piste-names', JSON.stringify(this.names));
+    localStorage.setItem('groovescore-names', JSON.stringify(this.names));
   }
 
-  valid_name(name: string): boolean {
-    if (!name)
+  valid_name(sn: SavedName): boolean {
+    if (!sn.name)
       return false;
 
-    let dupes = this.names.filter((x) => x.name.toUpperCase() === name.toUpperCase());
+    let dupes = this.names.filter((x) => x.name.toUpperCase() === sn.name.toUpperCase());
 
     return dupes.length === 1;
   }
 
   _all_valid(): boolean {
-    return this.names.filter((x) => !this.valid_name(x.name)).length === 0;
+    return this.names.filter((x) => !this.valid_name(x)).length === 0;
   }
 
   can_new_game(): boolean {

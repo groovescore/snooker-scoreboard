@@ -16,7 +16,7 @@ class Game {
   saved_games: SaveGameId[];
 
   static _save_game_name_slot(slot: number): string {
-    return `piste-on-piste-save-${slot}`;
+    return `groovescore-save-${slot}`;
   }
 
   constructor() {
@@ -132,21 +132,9 @@ class Game {
     this._save();
   }
 
-  _foul_retake(): void {
+  _end_frame(): void {
     this._push();
-    this.state.foul_retake();
-    this._save();
-  }
-
-  _concede(pid: number): void {
-    this._push();
-    this.state.concede(pid);
-    this._save();
-  }
-
-  _declare_winner(pid: number): void {
-    this._push();
-    this.state.declare_winner(pid);
+    this.state.end_frame();
     this._save();
   }
 
@@ -185,9 +173,7 @@ function create_game(_game: Game) {
     minus_balls: () => update((val) => { val._minus_balls(); return val; }),
     commit_foul: (value: number) => update((val) => { val._commit_foul(value); return val; }),
     end_turn: () => update((val) => { val._end_turn(); return val; }),
-    foul_retake: () => update((val) => { val._foul_retake(); return val; }),
-    concede: (pid: number) => update((val) => { val._concede(pid); return val; }),
-    declare_winner: (pid: number) => update((val) => { val._declare_winner(pid); return val; }),
+    end_frame: () => update((val) => { val._end_frame(); return val; }),
     edit_points: (pid: number, amount: number) => update((val) => { val._edit_points(pid, amount); return val; }),
     new_frame: () => update((val) => { val._new_frame(); return val; }),
     new_game: (names: any[]) => update((val) => { val._new_game(names); return val; }),

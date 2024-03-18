@@ -4,6 +4,7 @@
   export let value: number;
   export let action = () => {};
   export let active: boolean;
+  export let title: string = '';
   import { value_to_csscolor } from './ball-colors';
 
   $: brightness = active ? '100%' : '50%'
@@ -14,8 +15,8 @@
   }
 </script>
 
-<div class='ball' style='--csscolor: {value_to_csscolor(value)}; --brightness: {brightness};' on:click={onclick}>
-  <slot></slot>
+<div title='{title}' class='ball' style='--csscolor: {value_to_csscolor(value)}; --brightness: {brightness};' on:click={onclick}>
+  <div class='value'><slot></slot></div>
 </div>
 
 <style>
@@ -29,5 +30,11 @@
 
     filter: brightness(var(--brightness));
     -webkit-filter: brightness(var(--brightness)); /* https://caniuse.com/css-filters */
+  }
+  .value {
+    text-shadow: 2px 2px black;
+    color: white;
+    text-align: center;
+    font-size: 150%;
   }
 </style>

@@ -7,7 +7,7 @@
   let counts: number[];
   let err: number;
 
-  $: ball_counts = balls.length > 8;
+  $: ball_counts = balls.length > 10;
 
   $: {
     counts = [0,0,0,0,0,0,0,0];
