@@ -71,9 +71,9 @@ jobs:
           latest=${{ needs.configure.outputs.latest }}
           echo "<meta http-equiv=\"refresh\" content=\"0; url=$latest\" />" > latest.html
       - run: find
-      - uses: actions/configure-pages@v1
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
         with:
            path: .
       - id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
