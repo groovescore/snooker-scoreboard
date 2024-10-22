@@ -16,7 +16,7 @@ from current main branch.
 
 .. _scoreboard app: https://groovescore.github.io/snooker-scoreboard/latest.html
 
-.. _development version: https://groovescore.github.io/snooker-scoreboard/testing
+.. _development version: https://groovescore.github.io/snooker-scoreboard/main
 
 License
 -------
