@@ -279,7 +279,7 @@
 
     <div class='grid-container'>
       <div class='name-input-card middle {$names.can_new_game() ? "" : "unavailable"}' on:click={ui_new_game}>
-	<div class='info-card-copyright' on:click|stopPropagation={() => false}><a href="https://groovescore.github.io/snooker-scoreboard/">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
+	<div class='info-card-copyright' on:click|stopPropagation={() => false}><a href="https://groovescore.app">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
 	<div></div>
 	<div>GrooveScore</div>
 	<div>Snooker</div>

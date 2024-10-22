@@ -12,11 +12,11 @@ from current main branch.
 
 .. _Svelte: https://svelte.dev/
 
-.. _documentation: https://groovescore.github.io/snooker-scoreboard/
+.. _documentation: https://groovescore.app
 
-.. _scoreboard app: https://groovescore.github.io/snooker-scoreboard/latest.html
+.. _scoreboard app: https://groovescore.app/latest.html
 
-.. _development version: https://groovescore.github.io/snooker-scoreboard/main
+.. _development version: https://groovescore.app/main
 
 License
 -------
