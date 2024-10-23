@@ -8,10 +8,29 @@ Groovescore is a web application for keeping the score of a game of snooker.
 
 Launch the latest release of `Groovescore`_.
 
-The scoreboard app is a fairly simple and self-explanatory single-page
-application. After launching, internet connection is not required. All data is
-stored in browser local storage only, and never sent anywhere. The app currently
-works best in tablet size screens in landscape.
+Features
+--------
+
+* Free as in beer, free as in freedom, and always will be.
+
+* Preserves your privacy. All data is stored in browser local storage only, and
+  never sent anywhere.
+
+* Fairly simple and self-explanatory single-page application.
+
+* After launching, internet connection is not required.
+
+* Touch, mouse and keyboard input.
+
+* Unlimited undo and redo.
+
+* Autosave of last three games.
+
+* Game and frame statistics.
+
+* Manual score and ball count edit.
+
+* Currently works best in tablet size screens in landscape.
 
 License
 -------
