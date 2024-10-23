@@ -4,25 +4,37 @@
 Groovescore Snooker Scoreboard
 ==============================
 
-Launch the latest release of the `Snooker Scoreboard app`_.
+Groovescore is a web application for keeping the score of a game of snooker.
 
-The scoreboard app is a fairly simple single-page application. After launching,
-internet connection is not required. All state is stored in browser local
-storage only, and never sent anywhere. The app currently works best in tablet
-size screens in landscape.
+Launch the latest release of `Groovescore`_.
 
-.. note::
+The scoreboard app is a fairly simple and self-explanatory single-page
+application. After launching, internet connection is not required. All data is
+stored in browser local storage only, and never sent anywhere. The app currently
+works best in tablet size screens in landscape.
 
-   The saved games might not work across scoreboard app versions. If you start a
-   game using one version of the app, please finish it using the same
-   version. The app version is visible in the URL.
+License
+-------
 
-If you have any issues, questions or comments about the rules or the scoreboard
-app, please see the `Snooker Scoreboard GitHub project page`_.
+Groovescore is free software, released under the `GNU Affero General Public
+License v3.0 or later`_ (AGPL-3.0-or-later).
 
-.. _Snooker Scoreboard GitHub project page: https://github.com/groovescore/snooker-scoreboard
+Contact
+-------
 
-.. _Snooker Scoreboard app: latest.html
+If you have any issues, questions or comments about the scoreboard app, please
+see the `GitHub project page`_.
+
+.. warning::
+
+   Groovescore is still in early stages of development.
+
+.. _Groovescore: latest.html
+
+.. _GNU Affero General Public License v3.0 or later: https://spdx.org/licenses/AGPL-3.0-or-later.html
+
+.. _GitHub project page: https://github.com/groovescore/snooker-scoreboard
+
 
 .. toctree::
    :maxdepth: 1
