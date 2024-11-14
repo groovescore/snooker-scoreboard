@@ -1,17 +1,23 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- SPDX-FileCopyrightText: 2024 Jani Nikula <jani@nikula.org> -->
-<script>
-  export let show;
+<script lang="ts">
+  import { run } from 'svelte/legacy';
 
-  let dialog; // HTMLDialogElement
+  let { show = $bindable(), children } = $props();
 
-  $: if (dialog && show) dialog.showModal();
+  let dialog = $state(); // HTMLDialogElement
 
-  $: if (dialog && !show) dialog.close();
+  run(() => {
+    if (dialog && show) dialog.showModal();
+  });
+
+  run(() => {
+    if (dialog && !show) dialog.close();
+  });
 </script>
 
-<dialog bind:this={dialog} on:close={() => (show = false)} on:click={() => dialog.close()}>
-  <slot />
+<dialog bind:this={dialog} onclose={() => (show = false)} onclick={() => dialog.close()}>
+  {@render children?.()}
 </dialog>
 
 <style>
