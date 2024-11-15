@@ -5,6 +5,7 @@
     "noImplicitReturns": true,
     "strict": true,
     "noUnusedLocals": true,
+    "strictNullChecks": false,
   },
   "include": ["src/**/*", "src/node_modules"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
