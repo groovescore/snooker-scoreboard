@@ -2,6 +2,7 @@
 <!-- SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org> -->
 <script lang='ts'>
   import { value_to_csscolor } from './ball-colors';
+
   interface Props {
     value: number;
     action?: any;
@@ -15,7 +16,7 @@
     action = () => {},
     active,
     title = '',
-    children
+    children,
   }: Props = $props();
 
   let brightness = $derived(active ? '100%' : '50%')
