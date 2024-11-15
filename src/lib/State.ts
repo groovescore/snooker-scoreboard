@@ -3,6 +3,7 @@
 
 import Player from './Player';
 import * as timeutil from './time-util';
+import type { SavedName } from './Names';
 
 const MAX_BALLS: number = 15 + 6;
 
@@ -34,7 +35,7 @@ class State {
       this.players[i] = new Player(0, '', this.players[i]);
   }
 
-  constructor(names=null, source: Object = null) {
+  constructor(names: SavedName[] = null, source: Object = null) {
     // frame
     this.timestamp = Date.now()
 

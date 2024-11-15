@@ -3,6 +3,7 @@
 
 import { writable } from 'svelte/store';
 import State from './State';
+import type { SavedName } from './Names';
 
 export type SaveGameId = {
   slot: number;
@@ -150,8 +151,7 @@ class Game {
     this._save();
   }
 
-  // FIXME: use real type
-  _new_game(names: any[]): void {
+  _new_game(names: SavedName[]): void {
     this._push(new State(names));
     // Note: Don't autosave before first shot
   }
@@ -176,7 +176,7 @@ function create_game(_game: Game) {
     end_frame: () => update((val) => { val._end_frame(); return val; }),
     edit_points: (pid: number, amount: number) => update((val) => { val._edit_points(pid, amount); return val; }),
     new_frame: () => update((val) => { val._new_frame(); return val; }),
-    new_game: (names: any[]) => update((val) => { val._new_game(names); return val; }),
+    new_game: (names: SavedName[]) => update((val) => { val._new_game(names); return val; }),
   };
 }
 
