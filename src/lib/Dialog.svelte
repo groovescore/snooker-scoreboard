@@ -2,10 +2,19 @@
 <!-- SPDX-FileCopyrightText: 2024 Jani Nikula <jani@nikula.org> -->
 <script lang="ts">
   import { run } from 'svelte/legacy';
+  import type { Snippet } from 'svelte';
 
-  let { show = $bindable(), children } = $props();
+  interface Props {
+    show: boolean;
+    children: Snippet;
+  }
 
-  let dialog = $state(); // HTMLDialogElement
+  let {
+    show = $bindable(),
+    children,
+  }: Props = $props();
+
+  let dialog: HTMLDialogElement = $state();
 
   run(() => {
     if (dialog && show) dialog.showModal();
