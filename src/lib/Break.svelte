@@ -2,13 +2,15 @@
 <!-- SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org> -->
 <script lang='ts'>
   import { run } from 'svelte/legacy';
-
   import { value_to_csscolor } from './ball-colors';
+
   interface Props {
     balls: number[];
   }
 
-  let { balls }: Props = $props();
+  let {
+    balls,
+  }: Props = $props();
 
   let counts: number[] = $state();
   let err: number = $state();

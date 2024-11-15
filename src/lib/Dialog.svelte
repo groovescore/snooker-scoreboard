@@ -4,7 +4,15 @@
   import { run } from 'svelte/legacy';
   import type { Snippet } from 'svelte';
 
-  let { show = $bindable(), children }: { show: boolean, children: Snippet } = $props();
+  interface Props {
+    show: boolean;
+    children: Snippet;
+  }
+
+  let {
+    show = $bindable(),
+    children,
+  }: Props = $props();
 
   let dialog: HTMLDialogElement = $state();
 
