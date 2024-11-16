@@ -15,7 +15,7 @@
   let counts: number[] = $state();
   let err: number = $state();
 
-  let ball_counts = $derived(balls.length > 10);
+  let show_ball_counts: boolean = $derived(balls.length > 10);
 
   run(() => {
     counts = [0,0,0,0,0,0,0,0];
@@ -30,7 +30,7 @@
   });
 </script>
 
-{#if ball_counts}
+{#if show_ball_counts}
   {#each counts as count, value}
     {#if count > 0}
       <span class='ball value' style='--csscolor: {value_to_csscolor(value)};'>{count}</span>
