@@ -1,7 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- SPDX-FileCopyrightText: 2024 Jani Nikula <jani@nikula.org> -->
 <script lang="ts">
-  import { run } from 'svelte/legacy';
   import type { Snippet } from 'svelte';
 
   interface Props {
@@ -14,14 +13,13 @@
     children,
   }: Props = $props();
 
-  let dialog: HTMLDialogElement = $state();
+  let dialog: HTMLDialogElement;
 
-  run(() => {
-    if (dialog && show) dialog.showModal();
-  });
-
-  run(() => {
-    if (dialog && !show) dialog.close();
+  $effect(() => {
+    if (show)
+      dialog.showModal();
+    else
+      dialog.close();
   });
 </script>
 
