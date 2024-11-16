@@ -85,17 +85,17 @@
   // ui actions, each need to handle undo
   function ui_click_player(player: Player): void {
     // FIXME: don't duplicate the conditions here and in html
-    if ($game.state.is_current_player(player.pid) && $game.state.can_end_turn())
+    if (game.state.is_current_player(player.pid) && game.state.can_end_turn())
       game.end_turn();
   }
 
   function ui_player_edit_points(pid: number, amount: number): void {
-    if ($game.state.can_player_edit_points(pid, amount))
+    if (game.state.can_player_edit_points(pid, amount))
       game.edit_points(pid, amount);
   }
 
   function ui_new_frame(): void {
-    if (!$game.state.can_new_frame())
+    if (!game.state.can_new_frame())
       return;
 
     game.new_frame();
@@ -113,7 +113,7 @@
   function ui_score_card_player_style(player: Player): string {
     let active: string = '';
 
-    if ($game.state.is_current_player(player.pid))
+    if (game.state.is_current_player(player.pid))
       active = 'active';
 
     return `${active} ${id_to_pos_style(player.pid)}`;
@@ -194,11 +194,11 @@
       if (value >= 1 && value <= 7) {
 	if (modifier == 'f') {
 	  if (value >= 4) {
-	    if ($game.state.can_commit_foul(value))
+	    if (game.state.can_commit_foul(value))
 	      game.commit_foul(value);
 	  }
 	} else {
-	  if ($game.state.can_pot_ball(value))
+	  if (game.state.can_pot_ball(value))
 	    game.pot_ball(value);
 	}
       }
@@ -208,30 +208,30 @@
 	ui_goto_play_page();
       break;
     case ' ':
-      if ($game.state.can_end_turn())
+      if (game.state.can_end_turn())
 	game.end_turn();
       break;
     case 'z':
-      if ($game.can_undo)
+      if (game.can_undo)
 	game.undo();
       break;
     case 'y':
-      if ($game.can_redo)
+      if (game.can_redo)
 	game.redo();
       break;
     case 'f':
       ui_key_modifier_set(event.key);
       break;
     case '+':
-      if ($game.state.can_plus_balls())
+      if (game.state.can_plus_balls())
 	game.plus_balls();
       break;
     case '-':
-      if ($game.state.can_minus_balls())
+      if (game.state.can_minus_balls())
 	game.minus_balls();
       break;
     case 'n':
-      if ($game.state.can_new_frame())
+      if (game.state.can_new_frame())
 	game.new_frame();
       break;
     case 'm':
@@ -268,7 +268,7 @@
   }
 
   function ui_end_frame() {
-    if ($game.state.can_end_frame())
+    if (game.state.can_end_frame())
       game.end_frame();
   }
 
@@ -301,7 +301,7 @@
 	</div>
       {/each}
 
-      {#each $game.saved_games as save_game, index (save_game.slot) }
+      {#each game.saved_games as save_game, index (save_game.slot) }
 	<div class='info-card {save_game.timestamp ? "" : "unavailable"}' onclick={() => ui_load_game(save_game)}>
 	  <div>Game save {index}</div>
 	  <div></div>
@@ -324,35 +324,35 @@
   {:else if ui_page == UiPage.PLAY}
     <div class='grid-container'>
       <div class='score-card middle' onclick={ui_show_menu}>
-	<div>{ live_update($game.state.get_frame_time()) }</div>
-	<div>Frames ({$game.state.num_frames})</div>
+	<div>{ live_update(game.state.get_frame_time()) }</div>
+	<div>Frames ({game.state.num_frames})</div>
 	<div>
 	  Points
-	  <div>(Remaining {$game.state.num_points()})</div>
+	  <div>(Remaining {game.state.num_points()})</div>
 	</div>
 	<div>Break</div>
-	{#if $game.state.respot_black}
+	{#if game.state.respot_black}
 	  <div class='highlight'>re-spot black</div>
 	{:else}
 	  <div></div>
 	{/if}
 	<div class='card-button'>Menu</div>
       </div>
-      {#each $game.state.get_players() as player (player.pid)}
+      {#each game.state.get_players() as player (player.pid)}
 	<div class='score-card {ui_score_card_player_style(player)}' onclick={() => ui_click_player(player)}>
 	  <div>{player.name}</div>
 	  <div>{player.frame_wins}</div>
 	  <div class='score-card-points'>{player.points}</div>
-	  {#if $game.state.is_current_player(player.pid)}
+	  {#if game.state.is_current_player(player.pid)}
 	    <div>{player.cur_break}</div>
 	    <div class='score-card-break'><Break balls={player._cur_break}></Break></div>
 	  {:else}
 	    <div>({player.last_break})</div>
 	    <div class='score-card-break unavailable'><Break balls={player._last_break}></Break></div>
 	  {/if}
-	  {#if $game.state.is_current_player(player.pid) && $game.state.can_end_turn()}
+	  {#if game.state.is_current_player(player.pid) && game.state.can_end_turn()}
 	    <div title='Shortcut: [space]' class='card-button'>End turn</div>
-	  {:else if $game.state.is_winner(player.pid)}
+	  {:else if game.state.is_winner(player.pid)}
 	    <div class='highlight'>Frame Winner</div>
 	  {:else}
 	    <div></div>
@@ -365,7 +365,7 @@
 	{#each [1,2,3,4,5,6,7] as value}
 	  <Ball title='Shortcut: {value}'
 		value={value}
-		active={$game.state.can_pot_ball(value)}
+		active={game.state.can_pot_ball(value)}
 		action={() => game.pot_ball(value)}>
 	    {value}
 	  </Ball>
@@ -377,13 +377,13 @@
 	<div class='label'>Undo</div>
 	<Ball title='Shortcut: z'
 	      value={0}
-	      active={$game.can_undo}
+	      active={game.can_undo}
 	      action={() => game.undo()}>
 	  &#x21b6;
 	</Ball>
 	<Ball title='Shortcut: y'
 	      value={0}
-	      active={$game.can_redo}
+	      active={game.can_redo}
 	      action={() => game.redo()}>
 	  &#x21b7;
 	</Ball>
@@ -392,7 +392,7 @@
 	{#each [4,5,6,7] as value}
 	  <Ball title='Shortcut: f followed by {value}'
 		value={0}
-		active={$game.state.can_commit_foul(value)}
+		active={game.state.can_commit_foul(value)}
 		action={() => game.commit_foul(value)}>
 	    {value}
 	  </Ball>
@@ -403,22 +403,22 @@
   {:else}
     <div class='grid-container'>
       <div class='score-card middle' onclick={ui_goto_play_page}>
-	<div>{ live_update($game.state.get_frame_time()) }</div>
-	<div>Frames ({$game.state.num_frames})</div>
+	<div>{ live_update(game.state.get_frame_time()) }</div>
+	<div>Frames ({game.state.num_frames})</div>
 	<div>
 	  Points
-	  <div>(Remaining {$game.state.num_points()})</div>
+	  <div>(Remaining {game.state.num_points()})</div>
 	</div>
 	<div>Break</div>
 	<div></div>
 	<div title='Shortcut: [ESC]' class='card-button'>Continue play</div>
       </div>
-      {#each $game.state.get_players() as player (player.pid)}
+      {#each game.state.get_players() as player (player.pid)}
 	<div class='score-card {ui_score_card_player_style(player)}'>
 	  <div>{player.name}</div>
 	  <div>{player.frame_wins}</div>
 	  <div class='score-card-points'>{player.points}</div>
-	  {#if $game.state.is_current_player(player.pid)}
+	  {#if game.state.is_current_player(player.pid)}
 	    <div>{player.cur_break}</div>
 	    <div class='score-card-break'><Break balls={player._cur_break}></Break></div>
 	  {:else}
@@ -437,7 +437,7 @@
 	{#each [1,2,3,4,5,6,7] as value}
 	  <Ball value={value}
 		active={false}>
-	    {$game.state.num_balls(value)}
+	    {game.state.num_balls(value)}
 	  </Ball>
 	{/each}
 	<div class='label'></div>
@@ -446,13 +446,13 @@
 	<div class='label'>Undo</div>
 	<Ball title='Shortcut: z'
 	      value={0}
-	      active={$game.can_undo}
+	      active={game.can_undo}
 	      action={() => game.undo()}>
 	  &#x21b6;
 	</Ball>
 	<Ball title='Shortcut: y'
 	      value={0}
-	      active={$game.can_redo}
+	      active={game.can_redo}
 	      action={() => game.redo()}>
 	  &#x21b7;
 	</Ball>
@@ -461,13 +461,13 @@
 	<div class='label'>Adjust ball count</div>
 	<Ball title='Shortcut: -'
 	      value={0}
-	      active={$game.state.can_minus_balls()}
+	      active={game.state.can_minus_balls()}
 	      action={() => game.minus_balls()}>
 	  &ndash;
 	</Ball>
 	<Ball title='Shortcut: +'
 	      value={0}
-	      active={$game.state.can_plus_balls()}
+	      active={game.state.can_plus_balls()}
 	      action={() => game.plus_balls()}>
 	  +
 	</Ball>
@@ -484,8 +484,8 @@
 	<div class='menu-column'>
 	  <div title='Shortcut: s' class='menu-button' onclick={ui_show_stats}>Statistics</div>
 	  <div title='Shortcut: e' class='menu-button' onclick={ui_goto_edit_page}>Edit</div>
-	  <div title='Shortcut: FIXME' class='menu-button {$game.state.can_end_frame() ? "" : "unavailable"}' onclick={ui_end_frame}>End frame</div>
-	  <div title='Shortcut: FIXME' class='menu-button {$game.state.can_new_frame() ? "" : "unavailable"}' onclick={ui_new_frame}>New frame</div>
+	  <div title='Shortcut: FIXME' class='menu-button {game.state.can_end_frame() ? "" : "unavailable"}' onclick={ui_end_frame}>End frame</div>
+	  <div title='Shortcut: FIXME' class='menu-button {game.state.can_new_frame() ? "" : "unavailable"}' onclick={ui_new_frame}>New frame</div>
 	</div>
 	<div class='menu-column'>
 	  <div class='menu-button' onclick={ui_toggle_fullscreen}>Full screen</div>
@@ -505,7 +505,7 @@
 	  <div>&nbsp;</div>
 	  <div class='stats-heading'>Game statistics</div>
 
-	  <div>Frames ({$game.state.num_frames})</div>
+	  <div>Frames ({game.state.num_frames})</div>
 	  <div>Highest break</div>
 	  <div>Balls potted</div>
 	  <div>Time since last pot</div>
@@ -516,7 +516,7 @@
 	  <div>Balls potted</div>
 	  <div>Average shot time</div>
 	</div>
-	{#each $game.state.get_players() as player (player.pid)}
+	{#each game.state.get_players() as player (player.pid)}
 	  <div class='stats-column {id_to_pos_style(player.pid)}'>
 	    <div class='stats-name'>{player.name}</div>
 	    <div>&nbsp;</div>

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org>
 
-import { writable } from 'svelte/store';
 import State from './State';
 import type { SavedName } from './Names.svelte.ts';
 
@@ -11,10 +10,10 @@ export type SaveGameId = {
 };
 
 class Game {
-  undo_stack: State[] = [];
-  undo_index: number = -1;
-  _save_game_slot: number = 0;
-  saved_games: SaveGameId[];
+  undo_stack: State[] = $state([]);
+  undo_index: number = $state(-1);
+  _save_game_slot: number = $state(0);
+  saved_games: SaveGameId[] = $state();
 
   static _save_game_name_slot(slot: number): string {
     return `groovescore-save-${slot}`;
@@ -52,12 +51,12 @@ class Game {
     return Game._save_game_name_slot(this._save_game_slot);
   }
 
-  _save(): void {
+  save(): void {
     localStorage.setItem(this.save_game_name(), JSON.stringify(this.undo_stack));
   }
 
   // FIXME: handle failure to load properly
-  _load(slot: number): void {
+  load(slot: number): void {
     // save this in the same slot
     this._save_game_slot = slot;
 
@@ -81,7 +80,7 @@ class Game {
     return this.undo_index > 0;
   }
 
-  _undo(): void {
+  undo(): void {
     console.assert(this.can_undo);
 
     this.undo_index--;
@@ -91,7 +90,7 @@ class Game {
     return this.undo_index + 1 < this.undo_stack.length;
   }
 
-  _redo(): void {
+  redo(): void {
     console.assert(this.can_redo);
 
     this.undo_index++;
@@ -103,81 +102,58 @@ class Game {
     this.undo_stack.splice(++this.undo_index, this.undo_stack.length, s);
   }
 
-  _pot_ball(value: number): void {
+  pot_ball(value: number): void {
     this._push();
     this.state.pot_ball(value);
-    this._save();
+    this.save();
   }
 
-  _plus_balls(): void {
+  plus_balls(): void {
     this._push();
     this.state.plus_balls();
-    this._save();
+    this.save();
   }
 
-  _minus_balls(): void {
+  minus_balls(): void {
     this._push();
     this.state.minus_balls();
-    this._save();
+    this.save();
   }
 
-  _commit_foul(value: number): void {
+  commit_foul(value: number): void {
     this._push();
     this.state.commit_foul(value);
-    this._save();
+    this.save();
   }
 
-  _end_turn(): void {
+  end_turn(): void {
     this._push();
     this.state.end_turn();
-    this._save();
+    this.save();
   }
 
-  _end_frame(): void {
+  end_frame(): void {
     this._push();
     this.state.end_frame();
-    this._save();
+    this.save();
   }
 
-  _edit_points(pid: number, amount: number): void {
+  edit_points(pid: number, amount: number): void {
     this._push();
     this.state.player_edit_points(pid, amount);
-    this._save();
+    this.save();
   }
 
-  _new_frame(): void {
+  new_frame(): void {
     this._push();
     this.state.new_frame();
-    this._save();
+    this.save();
   }
 
-  _new_game(names: SavedName[]): void {
+  new_game(names: SavedName[]): void {
     this._push(new State(names));
     // Note: Don't autosave before first shot
   }
 };
 
-function create_game(_game: Game) {
-  let { set, update, subscribe } = writable(_game);
-
-  return {
-    set,
-    update,
-    subscribe,
-    undo: () => update((val) => { val._undo(); return val; }),
-    redo: () => update((val) => { val._redo(); return val; }),
-    load: (slot: number) => update((val) => { val._load(slot); return val; }),
-    save: () => update((val) => { val._save(); return val; }),
-    pot_ball: (value: number) => update((val) => { val._pot_ball(value); return val; }),
-    plus_balls: () => update((val) => { val._plus_balls(); return val; }),
-    minus_balls: () => update((val) => { val._minus_balls(); return val; }),
-    commit_foul: (value: number) => update((val) => { val._commit_foul(value); return val; }),
-    end_turn: () => update((val) => { val._end_turn(); return val; }),
-    end_frame: () => update((val) => { val._end_frame(); return val; }),
-    edit_points: (pid: number, amount: number) => update((val) => { val._edit_points(pid, amount); return val; }),
-    new_frame: () => update((val) => { val._new_frame(); return val; }),
-    new_game: (names: SavedName[]) => update((val) => { val._new_game(names); return val; }),
-  };
-}
-
-export const game = create_game(new Game());
+export const game = $state(new Game());
