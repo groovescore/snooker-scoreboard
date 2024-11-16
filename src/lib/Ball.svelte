@@ -5,18 +5,18 @@
   import { value_to_csscolor } from './ball-colors';
 
   interface Props {
-    value: number;
-    action?: any;
-    active: boolean;
     title?: string;
+    value: number;
+    active: boolean;
+    action?: any;
     children?: Snippet;
   }
 
   let {
-    value,
-    action = () => {},
-    active,
     title = '',
+    value,
+    active,
+    action = () => {},
     children,
   }: Props = $props();
 
