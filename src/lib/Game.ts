@@ -3,7 +3,7 @@
 
 import { writable } from 'svelte/store';
 import State from './State';
-import type { SavedName } from './Names';
+import type { SavedName } from './Names.svelte.ts';
 
 export type SaveGameId = {
   slot: number;

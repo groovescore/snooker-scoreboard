@@ -6,6 +6,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "strictNullChecks": false,
+    "allowImportingTsExtensions": true,
   },
   "include": ["src/**/*", "src/node_modules"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],

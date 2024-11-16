@@ -3,7 +3,7 @@
 
 import Player from './Player';
 import * as timeutil from './time-util';
-import type { SavedName } from './Names';
+import type { SavedName } from './Names.svelte.ts';
 
 const MAX_BALLS: number = 15 + 6;
 
