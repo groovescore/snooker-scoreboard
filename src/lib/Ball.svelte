@@ -2,13 +2,14 @@
 <!-- SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org> -->
 <script lang='ts'>
   import { value_to_csscolor } from './ball-colors';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     value: number;
     action?: any;
     active: boolean;
     title?: string;
-    children?: import('svelte').Snippet;
+    children?: Snippet;
   }
 
   let {
