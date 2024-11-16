@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org>
 
-import { writable } from 'svelte/store';
-
 function shuffle(array: any[]): any[] {
   let result: any[] = [];
 
@@ -22,7 +20,7 @@ export type SavedName = {
 };
 
 class Names {
-  names: SavedName[];
+  names: SavedName[] = $state();
 
   constructor() {
     let names: SavedName[] = this._load();
@@ -38,7 +36,7 @@ class Names {
     }
   }
 
-  _shuffle(): void {
+  shuffle(): void {
     this.names = shuffle(this.names);
   }
 
@@ -60,7 +58,7 @@ class Names {
     }
   }
 
-  _save(): void {
+  save(): void {
     localStorage.setItem('groovescore-names', JSON.stringify(this.names));
   }
 
@@ -82,16 +80,4 @@ class Names {
   }
 }
 
-function create_names(_names: Names) {
-  let { set, update, subscribe } = writable(_names);
-
-  return {
-    set,
-    update,
-    subscribe,
-    save: () => update((val) => { val._save(); return val; }),
-    shuffle: () => update((val) => { val._shuffle(); return val; }),
-  };
-}
-
-export const names = create_names(new Names());
+export const names = $state(new Names());
