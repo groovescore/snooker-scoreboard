@@ -13,19 +13,22 @@
   }: Props = $props();
 
   let counts: number[] = $state();
-  let err: number = $state();
+
+  let foul: number = $derived.by(() => {
+    for (const i of balls)
+      if (i < 0)
+	return i;
+    return 0;
+  });
 
   let show_ball_counts: boolean = $derived(balls.length > 10);
 
   run(() => {
     counts = [0,0,0,0,0,0,0,0];
-    err = 0;
 
     for (let i of balls) {
       if (i > 0)
 	counts[i]++;
-      else
-	err = i;
     }
   });
 </script>
@@ -43,8 +46,8 @@
     {/if}
   {/each}
 {/if}
-{#if err < 0}
-  <span class='ball value' style='--csscolor: {value_to_csscolor(err)};'>F</span>
+{#if foul}
+  <span class='ball value' style='--csscolor: {value_to_csscolor(foul)};'>F</span>
 {/if}
 
 <style>
