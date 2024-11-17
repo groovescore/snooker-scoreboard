@@ -20,7 +20,7 @@
     children,
   }: Props = $props();
 
-  let brightness = $derived(active ? '100%' : '50%')
+  let brightness: string = $derived(active ? '100%' : '50%')
 
   function onclick(): void {
     if (active)
