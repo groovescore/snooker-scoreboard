@@ -11,20 +11,20 @@ export class Player {
 
   game_high_break: number = 0;
   game_balls: number = 0;
-  _game_pot_timestamp: number = 0;
+  private _game_pot_timestamp: number = 0;
 
   // frame
   points: number = 0;
   frame_high_break: number = 0;
   frame_balls: number = 0;
-  _frame_time: number = 0;
-  _frame_shots: number = 0;
+  private _frame_time: number = 0;
+  private _frame_shots: number = 0;
 
   // turn
   _cur_break: number[] = [];
   _last_break: number[] = [];
 
-  _copy(source: Object): void {
+  private _copy(source: Object): void {
     Object.assign(this, source);
   }
 
@@ -57,7 +57,7 @@ export class Player {
     this._cur_break.push(-points);
   }
 
-  _break_size(b: number[]): number {
+  private _break_size(b: number[]): number {
     b = b.filter((v) => v > 0);
 
     if (b.length === 0)
