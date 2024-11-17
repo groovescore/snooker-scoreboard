@@ -1,8 +1,6 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org> -->
 <script lang='ts'>
-  import { stopPropagation } from 'svelte/legacy';
-
   import { Fullscreen } from './lib/Fullscreen.ts';
   import * as timeutil from './lib/time-util.ts';
   import Ball from './lib/Ball.svelte';
@@ -285,7 +283,7 @@
 
     <div class='grid-container'>
       <div class='name-input-card middle {names.can_new_game() ? "" : "unavailable"}' onclick={ui_new_game}>
-	<div class='info-card-copyright' onclick={stopPropagation(() => false)}><a href="https://groovescore.app">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
+	<div class='info-card-copyright' onclick={(e) => e.stopPropagation()}><a href="https://groovescore.app">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
 	<div></div>
 	<div>GrooveScore</div>
 	<div>Snooker</div>
@@ -295,7 +293,7 @@
       </div>
       {#each names.names as player_name (player_name.id)}
 	<div class='name-input-card {ui_name_input_card_style(player_name)}'>
-	  <input class='name-input' size=22 minlength=1 maxlength=22 placeholder='enter name' bind:value='{player_name.name}' onclick={stopPropagation(() => {})}/>
+	  <input class='name-input' size=22 minlength=1 maxlength=22 placeholder='enter name' bind:value='{player_name.name}'/>
 	  <div></div>
 	  <div></div>
 	  <div></div>
