@@ -41,7 +41,7 @@ export class Names {
   }
 
   // load names from local storage
-  _load(): SavedName[] {
+  private _load(): SavedName[] {
     let names_json = localStorage.getItem('groovescore-names');
     if (!names_json)
       return null;
@@ -71,7 +71,7 @@ export class Names {
     return dupes.length === 1;
   }
 
-  _all_valid(): boolean {
+  private _all_valid(): boolean {
     return this.names.filter((x) => !this.valid_name(x)).length === 0;
   }
 
