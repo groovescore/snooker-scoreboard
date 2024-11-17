@@ -8,11 +8,14 @@
   import Dialog from './lib/Dialog.svelte';
   import { Game } from './lib/Game.svelte.ts';
   import { Names } from './lib/Names.svelte.ts';
+  import { SaveGame } from './lib/SaveGame.svelte.ts';
   import type { Player } from './lib/Player.ts';
-  import type { SaveGameId } from './lib/Game.svelte.ts';
+  import type { SaveGameId } from './lib/SaveGame.svelte.ts';
   import type { SavedName } from './lib/Names.svelte.ts';
 
   const names: Names = $state(new Names());
+
+  const savegame: SaveGame = $state(new SaveGame());
 
   const game: Game = $state(new Game());
 
@@ -63,7 +66,7 @@
     // Note: Fullscreen can only be entered via user interaction
     fullscreen.load();
 
-    game.new_game(names.names);
+    game.new_game(names.names, savegame.new_game_slot());
 
     names.save();
 
@@ -303,7 +306,7 @@
 	</div>
       {/each}
 
-      {#each game.saved_games as save_game, index (save_game.slot) }
+      {#each savegame.saved_games as save_game, index (save_game.slot) }
 	<div class='info-card {save_game.timestamp ? "" : "unavailable"}' onclick={() => ui_load_game(save_game)}>
 	  <div>Game save {index}</div>
 	  <div></div>
