@@ -86,5 +86,3 @@ export class Fullscreen {
     this._save(enable);
   }
 }
-
-export default Fullscreen;
