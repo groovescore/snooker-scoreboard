@@ -1,20 +1,20 @@
 Groovescore Snooker Scoreboard Web App
 ======================================
 
-The scoreboard app is a fairly simple single-page application written in
-JavaScript and `Svelte`_. There's no internet connection required besides
-loading the page. All state is stored in browser local storage only, and never
-sent anywhere.
+Groovescore is a web application for keeping the score of a game of snooker.
 
-The `documentation`_ and the `scoreboard app`_ are continuously deployed in
-GitHub Pages. Additionally, there's a `development version`_ of the app built
+See the `documentation`_ for features. Launch the latest release of
+`Groovescore`_. Additionally, there's a `development version`_ of the app built
 from current main branch.
 
-.. _Svelte: https://svelte.dev/
+The scoreboard app is a single-page application written in TypeScript and
+`Svelte 5`_.
+
+.. _Svelte 5: https://svelte.dev/
 
 .. _documentation: https://groovescore.app
 
-.. _scoreboard app: https://groovescore.app/latest.html
+.. _Groovescore: https://groovescore.app/latest.html
 
 .. _development version: https://groovescore.app/main
 
