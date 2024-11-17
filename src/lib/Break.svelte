@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org> -->
 <script lang='ts'>
-  import { value_to_csscolor } from './ball-colors';
+  import { value_to_csscolor } from './ball-colors.ts';
 
   interface Props {
     balls: number[];
