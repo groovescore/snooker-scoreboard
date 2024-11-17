@@ -10,12 +10,12 @@ export type SaveGameId = {
 };
 
 export class Game {
-  undo_stack: State[] = $state([]);
-  undo_index: number = $state(-1);
-  _save_game_slot: number = $state(0);
+  private undo_stack: State[] = $state([]);
+  private undo_index: number = $state(-1);
+  private _save_game_slot: number = $state(0);
   saved_games: SaveGameId[] = $state();
 
-  static _save_game_name_slot(slot: number): string {
+  private static _save_game_name_slot(slot: number): string {
     return `groovescore-save-${slot}`;
   }
 
@@ -23,7 +23,7 @@ export class Game {
     this._read_saved_games();
   }
 
-  _read_saved_games(): void {
+  private _read_saved_games(): void {
     let saved: SaveGameId[] = [];
 
     for (let slot of [0,1,2]) {
@@ -96,7 +96,7 @@ export class Game {
     this.undo_index++;
   }
 
-  _push(s: State = null): void {
+  private _push(s: State = null): void {
     if (s === null)
       s = this.state.deepcopy();
     this.undo_stack.splice(++this.undo_index, this.undo_stack.length, s);
