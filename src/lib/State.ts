@@ -9,25 +9,25 @@ const MAX_BALLS: number = 15 + 6;
 
 export class State {
   // game
-  _break_off_pid: number = 0;
+  private _break_off_pid: number = 0;
   num_frames: number = 0;
 
   // frame
   timestamp: number;
-  _start_timestamp: number = 0;
-  _end_timestamp: number = 0;
-  _shot_timestamp: number = 0;
-  _num_balls: number = MAX_BALLS;
+  private _start_timestamp: number = 0;
+  private _end_timestamp: number = 0;
+  private _shot_timestamp: number = 0;
+  private _num_balls: number = MAX_BALLS;
 
-  cur_pid: number = 0;
-  red: boolean = false;
+  private cur_pid: number = 0;
+  private red: boolean = false;
   foul: boolean = false;
   respot_black: boolean = false;
-  _frame_over: boolean = false;
+  private _frame_over: boolean = false;
 
-  players: Player[] = [];
+  private players: Player[] = [];
 
-  _copy(source: Object): void {
+  private _copy(source: Object): void {
     // this will override players
     Object.assign(this, source);
 
@@ -62,7 +62,7 @@ export class State {
     return new State(null, source);
   }
 
-  _get_player_by_pid(pid: number, other: boolean = false): Player {
+  private _get_player_by_pid(pid: number, other: boolean = false): Player {
     for (let p of this.players) {
       // FIXME: simplify
       if (other) {
@@ -79,7 +79,7 @@ export class State {
     return null;
   }
 
-  _other_player_pid(): number {
+  private _other_player_pid(): number {
     return (this.cur_pid + 1) % 2;
   }
 
@@ -165,11 +165,11 @@ export class State {
     return pid === players[1].pid;
   }
 
-  _has_frame_started(): boolean {
+  private _has_frame_started(): boolean {
     return this._start_timestamp != 0;
   }
 
-  _detect_frame_over(): boolean {
+  private _detect_frame_over(): boolean {
     // snookers possible!
     if (this.num_colors() > 1)
       return false;
@@ -179,7 +179,7 @@ export class State {
     return players[0].points + this.num_points() < players[1].points;
   }
 
-  _is_frame_over(): boolean {
+  private _is_frame_over(): boolean {
     return this._frame_over;
   }
 
@@ -196,7 +196,7 @@ export class State {
     return timeutil.format_ms(frame_time);
   }
 
-  _log_shot(value: number): void {
+  private _log_shot(value: number): void {
     const now = Date.now();
     let shot_duration: number;
 
@@ -214,7 +214,7 @@ export class State {
     p.log_shot(shot_duration, value);
   }
 
-  _end_turn(): void {
+  private _end_turn(): void {
     let p: Player = this.current_player();
     p.end_turn();
 
@@ -233,7 +233,7 @@ export class State {
     }
   }
 
-  _pot_points(points: number): void {
+  private _pot_points(points: number): void {
     this.foul = false;
 
     let p: Player = this.current_player();
@@ -243,12 +243,12 @@ export class State {
       this._end_turn();
   }
 
-  _can_pot_red(): boolean {
+  private _can_pot_red(): boolean {
     // Note: Can pot two reds at a time!
     return this.num_reds() > 0;
   }
 
-  _pot_red(): void {
+  private _pot_red(): void {
     console.assert(this._can_pot_red());
 
     this._num_balls--;
@@ -257,7 +257,7 @@ export class State {
     this._pot_points(1);
   }
 
-  _can_pot_color(value: number): boolean {
+  private _can_pot_color(value: number): boolean {
     if (this.red)
       return true;
 
@@ -267,7 +267,7 @@ export class State {
     return this.num_colors() - (7 - value + 1) === 0;
   }
 
-  _pot_color(value: number): void {
+  private _pot_color(value: number): void {
     console.assert(this._can_pot_color(value));
 
     if (this.num_reds() === 0 && !this.red)
@@ -335,7 +335,7 @@ export class State {
     this._end_turn();
   }
 
-  _end_frame(): void {
+  private _end_frame(): void {
     this._end_timestamp = Date.now();
 
     this._frame_over = true;
