@@ -10,7 +10,7 @@
   import Dialog from './lib/Dialog.svelte';
   import { Game } from './lib/Game.svelte.ts';
   import { Names } from './lib/Names.svelte.ts';
-  import type Player from './lib/Player.ts';
+  import type { Player } from './lib/Player.ts';
   import type { SaveGameId } from './lib/Game.svelte.ts';
   import type { SavedName } from './lib/Names.svelte.ts';
 
