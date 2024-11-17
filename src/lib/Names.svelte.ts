@@ -19,7 +19,7 @@ export type SavedName = {
   name: string;
 };
 
-class Names {
+export class Names {
   names: SavedName[] = $state();
 
   constructor() {
@@ -79,5 +79,3 @@ class Names {
     return this._all_valid();
   }
 }
-
-export const names = $state(new Names());

@@ -9,10 +9,12 @@
   import Break from './lib/Break.svelte';
   import Dialog from './lib/Dialog.svelte';
   import { game } from './lib/Game.svelte.ts';
-  import { names } from './lib/Names.svelte.ts';
+  import { Names } from './lib/Names.svelte.ts';
   import type Player from './lib/Player';
   import type { SaveGameId } from './lib/Game.svelte.ts';
   import type { SavedName } from './lib/Names.svelte.ts';
+
+  const names: Names = $state(new Names());
 
   let fullscreen: Fullscreen = new Fullscreen(document.documentElement);
 
