@@ -12,7 +12,7 @@ export class SaveGame {
   saved_games: SaveGameId[] = $state();
 
   constructor() {
-    this.saved_games = this._read_saved_games();
+    this.reload();
   }
 
   private _read_saved_games(): SaveGameId[] {
@@ -34,6 +34,10 @@ export class SaveGame {
     saved.sort((s1: SaveGameId, s2: SaveGameId) => s2.timestamp - s1.timestamp);
 
     return saved;
+  }
+
+  reload(): void {
+    this.saved_games = this._read_saved_games();
   }
 
   new_game_slot(): number {

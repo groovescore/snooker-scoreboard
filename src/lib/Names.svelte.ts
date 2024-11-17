@@ -23,6 +23,10 @@ export class Names {
   names: SavedName[] = $state();
 
   constructor() {
+    this.reload();
+  }
+
+  reload(): void {
     let names: SavedName[] = this._load();
 
     if (names) {

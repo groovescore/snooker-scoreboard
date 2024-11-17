@@ -74,9 +74,10 @@
   }
 
   function ui_goto_start_page(): void {
-    // FIXME: This can't just set ui_page = UiPage.START, because it messes up
-    // current game and names etc. Until that's fixed, just reload.
-    location.reload();
+    names.reload();
+    savegame.reload();
+
+    ui_page = UiPage.START;
   }
 
   function ui_goto_play_page(): void {
