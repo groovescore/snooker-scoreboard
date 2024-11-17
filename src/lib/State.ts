@@ -7,7 +7,7 @@ import type { SavedName } from './Names.svelte.ts';
 
 const MAX_BALLS: number = 15 + 6;
 
-class State {
+export class State {
   // game
   _break_off_pid: number = 0;
   num_frames: number = 0;
@@ -410,5 +410,3 @@ class State {
     p.points = p.points + amount;
   }
 }
-
-export default State;
