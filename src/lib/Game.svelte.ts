@@ -3,7 +3,7 @@
 
 import { State } from './State.ts';
 import { SaveGame } from './SaveGame.svelte.ts';
-import type { SavedName } from './Names.svelte.ts';
+import type { SavedName } from './Options.svelte.ts';
 
 export class Game {
   private undo_stack: State[] = $state([]);

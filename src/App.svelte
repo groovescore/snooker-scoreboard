@@ -7,13 +7,13 @@
   import Break from './lib/Break.svelte';
   import Dialog from './lib/Dialog.svelte';
   import { Game } from './lib/Game.svelte.ts';
-  import { Names } from './lib/Names.svelte.ts';
+  import { Options } from './lib/Options.svelte.ts';
   import { SaveGame } from './lib/SaveGame.svelte.ts';
   import type { Player } from './lib/Player.ts';
   import type { SaveGameId } from './lib/SaveGame.svelte.ts';
-  import type { SavedName } from './lib/Names.svelte.ts';
+  import type { SavedName } from './lib/Options.svelte.ts';
 
-  const names: Names = $state(new Names());
+  const options: Options = $state(new Options());
 
   const savegame: SaveGame = $state(new SaveGame());
 
@@ -54,27 +54,27 @@
 
     game.load(save_game.slot);
 
-    names.save();
+    options.save();
 
     ui_page = UiPage.PLAY;
   }
 
   function ui_new_game(): void {
-    if (!names.can_new_game())
+    if (!options.can_new_game())
       return;
 
     // Note: Fullscreen can only be entered via user interaction
     fullscreen.load();
 
-    game.new_game(names.names, savegame.new_game_slot());
+    game.new_game(options.names, savegame.new_game_slot());
 
-    names.save();
+    options.save();
 
     ui_page = UiPage.PLAY;
   }
 
   function ui_goto_start_page(): void {
-    names.reload();
+    options.reload();
     savegame.reload();
 
     ui_page = UiPage.START;
@@ -128,7 +128,7 @@
   function ui_name_input_card_style(sn: SavedName): string {
     let invalid: string = '';
 
-    if (!names.valid_name(sn))
+    if (!options.valid_name(sn))
       invalid = 'invalid';
 
     return `${invalid} ${id_to_pos_style(sn.id)}`;
@@ -286,7 +286,7 @@
   {#if ui_page == UiPage.START}
 
     <div class='grid-container'>
-      <div class='name-input-card middle {names.can_new_game() ? "" : "unavailable"}' onclick={ui_new_game}>
+      <div class='name-input-card middle {options.can_new_game() ? "" : "unavailable"}' onclick={ui_new_game}>
 	<div class='info-card-copyright' onclick={(e) => e.stopPropagation()}><a href="https://groovescore.app">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
 	<div></div>
 	<div>GrooveScore</div>
@@ -295,7 +295,7 @@
 	<div></div>
 	<div class='card-button'>New game</div>
       </div>
-      {#each names.names as player_name (player_name.id)}
+      {#each options.names as player_name (player_name.id)}
 	<div class='name-input-card {ui_name_input_card_style(player_name)}'>
 	  <input class='name-input' size=22 minlength=1 maxlength=22 placeholder='enter name' bind:value='{player_name.name}'/>
 	  <div></div>
