@@ -111,7 +111,7 @@ export class Game {
   }
 
   new_game(options: Options, slot: number): void {
-    this.undo_stack = [new State(options.names)];
+    this.undo_stack = [new State(options)];
     this.undo_index = 0;
     this.save_game_slot = slot;
     // Note: Don't autosave before first shot

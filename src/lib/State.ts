@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org>
 
 import * as timeutil from './time-util.ts';
+import { Options } from './Options.svelte.ts';
 import { Player } from './Player.ts';
 import type { SavedName } from './Options.svelte.ts';
 
@@ -35,7 +36,9 @@ export class State {
       this.players[i] = new Player(0, '', this.players[i]);
   }
 
-  constructor(names: SavedName[] = null, source: Object = null) {
+  constructor(options: Options = null, source: Object = null) {
+    let names: SavedName[] = options ? options.names : null;
+
     // frame
     this.timestamp = Date.now()
 
