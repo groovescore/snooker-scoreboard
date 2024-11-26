@@ -21,6 +21,7 @@ export type SavedName = {
 
 export class Options {
   names: SavedName[] = $state();
+  num_reds: number = $state();
 
   constructor() {
     this.reload();
@@ -38,6 +39,8 @@ export class Options {
 
       this.names = names;
     }
+
+    this.num_reds = 15;
   }
 
   shuffle(): void {

@@ -6,10 +6,9 @@ import { Options } from './Options.svelte.ts';
 import { Player } from './Player.ts';
 import type { SavedName } from './Options.svelte.ts';
 
-const MAX_BALLS: number = 15 + 6;
-
 export class State {
   // game
+  private readonly max_balls: number;
   private _break_off_pid: number = 0;
   num_frames: number = 0;
 
@@ -18,7 +17,7 @@ export class State {
   private _start_timestamp: number = 0;
   private _end_timestamp: number = 0;
   private _shot_timestamp: number = 0;
-  private _num_balls: number = MAX_BALLS;
+  private _num_balls: number;
 
   private cur_pid: number = 0;
   private red: boolean = false;
@@ -38,6 +37,11 @@ export class State {
 
   constructor(options: Options = null, source: Object = null) {
     let names: SavedName[] = options ? options.names : null;
+
+    if (options) {
+      this.max_balls = options.num_reds + 6;
+      this._num_balls = this.max_balls;
+    }
 
     // frame
     this.timestamp = Date.now()
@@ -358,7 +362,7 @@ export class State {
     this._start_timestamp = 0;
     this._end_timestamp = 0;
     this._shot_timestamp = 0;
-    this._num_balls = MAX_BALLS;
+    this._num_balls = this.max_balls;
 
     this.red = false;
     this.foul = false;
@@ -374,7 +378,7 @@ export class State {
   }
 
   can_plus_balls(): boolean {
-    return !this._is_frame_over() && this._num_balls < MAX_BALLS;
+    return !this._is_frame_over() && this._num_balls < this.max_balls;
   }
 
   plus_balls(): void {
