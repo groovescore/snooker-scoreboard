@@ -363,7 +363,7 @@
 	  {/if}
 	  {#if game.state.is_current_player(player.pid) && game.state.can_end_turn()}
 	    <div title='Shortcut: [space]' class='card-button'>End turn</div>
-	  {:else if game.state.is_winner(player.pid)}
+	  {:else if game.state.is_frame_winner(player.pid)}
 	    <div class='highlight'>Frame Winner</div>
 	  {:else}
 	    <div></div>

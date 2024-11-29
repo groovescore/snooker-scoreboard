@@ -164,7 +164,7 @@ export class State {
     return pid === this.cur_pid;
   }
 
-  is_winner(pid: number): boolean {
+  is_frame_winner(pid: number): boolean {
     if (!this._is_frame_over())
       return false;
 
