@@ -1,19 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org>
 
-function shuffle(array: any[]): any[] {
-  let result: any[] = [];
-
-  while (array.length) {
-    let index: number = Math.floor(Math.random() * array.length);
-
-    result.push(array[index]);
-    array.splice(index, 1);
-  }
-
-  return result;
-}
-
 export type SavedName = {
   id: number;
   name: string;
@@ -48,10 +35,6 @@ export class Options {
 
       this.names = names;
     }
-  }
-
-  shuffle(): void {
-    this.names = shuffle(this.names);
   }
 
   // load names from local storage
