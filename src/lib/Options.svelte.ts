@@ -30,6 +30,7 @@ export class Options {
   mode: number = $state(this.mode_max);
 
   num_reds: number = $derived(modes[this.mode]);
+  num_frames: number = $state(-1);
 
   constructor() {
     this.reload();

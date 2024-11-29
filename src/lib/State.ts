@@ -8,9 +8,11 @@ import type { SavedName } from './Options.svelte.ts';
 
 export class State {
   // game
+  readonly max_frames: number;
   private readonly max_balls: number;
   private _break_off_pid: number = 0;
   num_frames: number = 0;
+  private _game_over: boolean = false;
 
   // frame
   timestamp: number;
@@ -39,6 +41,7 @@ export class State {
     let names: SavedName[] = options ? options.names : null;
 
     if (options) {
+      this.max_frames = options.num_frames > 0 ? options.num_frames : 0;
       this.max_balls = options.num_reds + 6;
       this._num_balls = this.max_balls;
     }
@@ -162,6 +165,14 @@ export class State {
       return false;
 
     return pid === this.cur_pid;
+  }
+
+  is_game_winner(pid: number): boolean {
+    if (!this._game_over)
+      return false;
+
+    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare_frames(p2));
+    return pid === players[1].pid;
   }
 
   is_frame_winner(pid: number): boolean {
@@ -350,10 +361,12 @@ export class State {
 
     const players: Player[] = [...this.players].sort((p1, p2) => p1.compare(p2));
     players[1].frame_wins++;
+    if (this.max_frames && players[1].frame_wins >= (this.max_frames + 1) / 2)
+      this._game_over = true;
   }
 
   can_new_frame(): boolean {
-    return this._is_frame_over();
+    return this._is_frame_over() && !this._game_over;
   }
 
   new_frame(): void {

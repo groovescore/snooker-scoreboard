@@ -298,12 +298,18 @@
       {#each options.names as player_name (player_name.id)}
 	<div class='name-input-card {ui_name_input_card_style(player_name)}'>
 	  <input class='name-input' size=22 minlength=1 maxlength=22 placeholder='enter name' bind:value='{player_name.name}'/>
-	  <div></div>
-	  <div></div>
 	  {#if player_name.id === 0}
+	    {#if options.num_frames > 0}
+	      <div>Best of {options.num_frames} frames</div>
+	    {:else}
+	      <div>Continuous play</div>
+	    {/if}
+	    <div><input type="range" bind:value={options.num_frames} min="-1" max="35" step="2"></div>
 	    <div>{options.num_reds} Reds</div>
 	    <div><input type="range" bind:value={options.mode} min="{options.mode_min}" max="{options.mode_max}"></div>
 	  {:else}
+	    <div></div>
+	    <div></div>
 	    <div></div>
 	    <div></div>
 	  {/if}
@@ -336,7 +342,7 @@
     <div class='grid-container'>
       <div class='score-card middle' onclick={ui_show_menu}>
 	<div>{ live_update(game.state.get_frame_time()) }</div>
-	<div>Frames ({game.state.num_frames})</div>
+	<div>Frames ({game.state.max_frames ? game.state.max_frames : game.state.num_frames})</div>
 	<div>
 	  Points
 	  <div>(Remaining {game.state.num_points()})</div>
@@ -363,6 +369,8 @@
 	  {/if}
 	  {#if game.state.is_current_player(player.pid) && game.state.can_end_turn()}
 	    <div title='Shortcut: [space]' class='card-button'>End turn</div>
+	  {:else if game.state.is_game_winner(player.pid)}
+	    <div class='highlight'>Game Winner</div>
 	  {:else if game.state.is_frame_winner(player.pid)}
 	    <div class='highlight'>Frame Winner</div>
 	  {:else}
@@ -415,7 +423,7 @@
     <div class='grid-container'>
       <div class='score-card middle' onclick={ui_goto_play_page}>
 	<div>{ live_update(game.state.get_frame_time()) }</div>
-	<div>Frames ({game.state.num_frames})</div>
+	<div>Frames ({game.state.max_frames ? game.state.max_frames : game.state.num_frames})</div>
 	<div>
 	  Points
 	  <div>(Remaining {game.state.num_points()})</div>
@@ -516,7 +524,7 @@
 	  <div>&nbsp;</div>
 	  <div class='stats-heading'>Game statistics</div>
 
-	  <div>Frames ({game.state.num_frames})</div>
+	  <div>Frames ({game.state.max_frames ? game.state.max_frames : game.state.num_frames})</div>
 	  <div>Highest break</div>
 	  <div>Balls potted</div>
 	  <div>Time since last pot</div>

@@ -109,6 +109,9 @@ export class Player {
     this._frame_shots = 0;
   }
 
+  compare_frames(other: Player): number {
+    return this.frame_wins - other.frame_wins;
+  }
   compare(other: Player): number {
     return this.points - other.points;
   }
