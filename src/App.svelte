@@ -307,14 +307,16 @@
 	    <div><input type="range" bind:value={options.num_frames} min="-1" max="35" step="2"></div>
 	    <div>{options.num_reds} Reds</div>
 	    <div><input type="range" bind:value={options.mode} min="{options.mode_min}" max="{options.mode_max}"></div>
+	    <div>Randomize first to break</div>
+	    <div><input type="range" bind:value={options.randomize} min="0" max="1"></div>
 	  {:else}
 	    <div></div>
 	    <div></div>
 	    <div></div>
 	    <div></div>
+	    <div></div>
+	    <div></div>
 	  {/if}
-	  <div></div>
-	  <div></div>
 	</div>
       {/each}
 

@@ -44,6 +44,9 @@ export class State {
       this.max_frames = options.num_frames > 0 ? options.num_frames : 0;
       this.max_balls = options.num_reds + 6;
       this._num_balls = this.max_balls;
+
+      if (options.randomize && Math.random() < 0.5)
+	names.reverse();
     }
 
     // frame

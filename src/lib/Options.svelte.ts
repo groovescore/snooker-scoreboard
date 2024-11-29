@@ -18,6 +18,7 @@ export class Options {
 
   num_reds: number = $derived(modes[this.mode]);
   num_frames: number = $state(-1);
+  randomize: number = $state(1);
 
   constructor() {
     this.reload();
