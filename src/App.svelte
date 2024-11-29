@@ -300,8 +300,13 @@
 	  <input class='name-input' size=22 minlength=1 maxlength=22 placeholder='enter name' bind:value='{player_name.name}'/>
 	  <div></div>
 	  <div></div>
-	  <div></div>
-	  <div></div>
+	  {#if player_name.id === 0}
+	    <div>{options.num_reds} Reds</div>
+	    <div><input type="range" bind:value={options.mode} min="{options.mode_min}" max="{options.mode_max}"></div>
+	  {:else}
+	    <div></div>
+	    <div></div>
+	  {/if}
 	  <div></div>
 	  <div></div>
 	</div>

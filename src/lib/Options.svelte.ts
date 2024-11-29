@@ -19,9 +19,17 @@ export type SavedName = {
   name: string;
 };
 
+// How many red balls to start with? Only three options, not arbitrary.
+const modes: number[] = [6, 10, 15];
+
 export class Options {
   names: SavedName[] = $state();
-  num_reds: number = $state();
+
+  readonly mode_min: number = 0;
+  readonly mode_max: number = modes.length - 1;
+  mode: number = $state(this.mode_max);
+
+  num_reds: number = $derived(modes[this.mode]);
 
   constructor() {
     this.reload();
@@ -39,8 +47,6 @@ export class Options {
 
       this.names = names;
     }
-
-    this.num_reds = 15;
   }
 
   shuffle(): void {
