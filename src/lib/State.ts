@@ -179,7 +179,7 @@ export class State {
     if (!this._is_frame_over())
       return false;
 
-    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare(p2));
+    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare_points(p2));
     return pid === players[1].pid;
   }
 
@@ -192,7 +192,7 @@ export class State {
     if (this.num_colors() > 1)
       return false;
 
-    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare(p2));
+    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare_points(p2));
 
     return players[0].points + this.num_points() < players[1].points;
   }
@@ -359,7 +359,7 @@ export class State {
     this._frame_over = true;
     this.num_frames++;
 
-    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare(p2));
+    const players: Player[] = [...this.players].sort((p1, p2) => p1.compare_points(p2));
     players[1].frame_wins++;
     if (this.max_frames && players[1].frame_wins >= (this.max_frames + 1) / 2)
       this._game_over = true;

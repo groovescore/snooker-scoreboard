@@ -112,7 +112,7 @@ export class Player {
   compare_frames(other: Player): number {
     return this.frame_wins - other.frame_wins;
   }
-  compare(other: Player): number {
+  compare_points(other: Player): number {
     return this.points - other.points;
   }
 };
