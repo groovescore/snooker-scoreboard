@@ -14,6 +14,7 @@ export class State {
   num_frames: number = 0;
   private _game_over: boolean = false;
   version: string = version;
+  league_match_id: string = null;
 
   // frame
   timestamp: number;
@@ -59,6 +60,10 @@ export class State {
 
       // frame
       this.timestamp = Date.now()
+
+      // League match id, if any
+      if (options.selected_match)
+	this.league_match_id = options.selected_match.id;
     } else if (source) {
       this._copy(source);
     }
@@ -163,6 +168,10 @@ export class State {
       return false;
 
     return pid === this.cur_pid;
+  }
+
+  is_game_over(): boolean {
+    return this._game_over;
   }
 
   is_game_winner(pid: number): boolean {
