@@ -9,6 +9,7 @@
   import { Game } from './lib/Game.svelte.ts';
   import { Options } from './lib/Options.svelte.ts';
   import { SaveGame } from './lib/SaveGame.svelte.ts';
+  import { Server } from './lib/Server.svelte.ts';
   import type { Player } from './lib/Player.ts';
   import type { SaveGameId } from './lib/SaveGame.svelte.ts';
   import type { SavedName } from './lib/Options.svelte.ts';
@@ -19,6 +20,20 @@
   const savegame: SaveGame = $state(new SaveGame());
 
   const game: Game = $state(new Game());
+
+  const server: Server = new Server(options.server_url, options.server_auth);
+  $inspect(server.fixtures);
+
+  $effect(() => {
+    if (options.play_league_match)
+      server.get_fixtures();
+  });
+
+  $effect(() => {
+    // Reference just for the effect dependency
+    options.selected_match;
+    options.setup_league_match();
+  });
 
   const fullscreen: Fullscreen = new Fullscreen(document.documentElement);
 
@@ -108,6 +123,17 @@
     game.new_frame();
 
     ui_page = UiPage.PLAY;
+  }
+
+  function ui_can_post_scores(): boolean {
+    return game.state.is_game_over() && game.state.league_match_id;
+  }
+
+  function ui_post_scores(): void {
+    if (!ui_can_post_scores())
+      return;
+
+    server.post_scores(game);
   }
 
   function id_to_pos_style(id: number): string {
@@ -315,12 +341,50 @@
 	    {/if}
 	    <div><input type="range" bind:value={options.first_to_break} min="0" max="2"></div>
 	  {:else}
-	    <div></div>
-	    <div></div>
-	    <div></div>
-	    <div></div>
-	    <div></div>
-	    <div></div>
+	    {#if options.server_url && options.server_auth}
+	      <div>League Match</div>
+	      <div><input type="range" bind:value={options.play_league_match} min="0" max="1"
+			  onchange={() => {options.selected_group=null; options.selected_match=null;}}></div>
+	      {#if options.play_league_match && server.fixtures}
+		<div>
+		  <select bind:value={options.selected_group}
+			  onchange={() => (options.selected_match=null)}>
+		    <option value={null}>Choose Group</option>
+		    {#each server.get_groups() as group}
+		      <option value={group}>{group}</option>
+		    {/each}
+		  </select>
+		</div>
+		{#if options.selected_group}
+		  <div>
+		    <select bind:value={options.selected_match}>
+		      <option value={null}>Choose League Match</option>
+		      {#each server.get_matches(options.selected_group) as match}
+			<option value={match}>{match.player1} vs. {match.player2}</option>
+		      {/each}
+		    </select>
+		  </div>
+		{:else}
+		  <div></div>
+		{/if}
+	      {:else}
+		<div></div>
+		<div></div>
+	      {/if}
+	      <div></div>
+	      {#if options.selected_match}
+		<div>League Match ID: {options.selected_match.id}</div>
+	      {:else}
+		<div></div>
+	      {/if}
+	    {:else}
+	      <div></div>
+	      <div></div>
+	      <div></div>
+	      <div></div>
+	      <div></div>
+	      <div></div>
+	    {/if}
 	  {/if}
 	</div>
       {/each}
@@ -526,7 +590,7 @@
 	  <div class='menu-button' onclick={ui_toggle_fullscreen}>Full screen</div>
 	  <div class='menu-button' onclick={ui_goto_start_page}>Main screen</div>
 	  <div class='menu-button unavailable'>Help</div>
-	  <div class='menu-button unavailable'>Free ball</div>
+	  <div class='menu-button {ui_can_post_scores() ? "" : "unavailable"}' onclick={ui_post_scores}>Post scores</div>
 	</div>
       </div>
     </div>
