@@ -4,7 +4,6 @@
 import * as timeutil from './time-util.ts';
 import { Options } from './Options.svelte.ts';
 import { Player } from './Player.ts';
-import type { SavedName } from './Options.svelte.ts';
 
 export class State {
   // game
@@ -38,8 +37,6 @@ export class State {
   }
 
   constructor(options: Options = null, source: Object = null) {
-    let names: SavedName[] = options ? options.names : null;
-
     if (options) {
       this.max_frames = options.num_frames > 0 ? options.num_frames : 0;
       this.max_balls = options.num_reds + 6;
@@ -51,26 +48,18 @@ export class State {
 	this.break_off_pid = options.first_to_break;
 
       this.cur_pid = this.break_off_pid;
-    }
 
-    // frame
-    this.timestamp = Date.now()
+      for (let pid of [0,1]) {
+	let p: Player = new Player(pid, options.names[pid].name);
 
-    for (let pid of [0,1]) {
-      let name: string;
+	this.players.push(p)
+      }
 
-      if (names && pid < names.length && names[pid].name && names[pid].name.length > 0)
-	name = names[pid].name;
-      else
-	name = `player ${pid}`;
-
-      let p: Player = new Player(pid, name);
-
-      this.players.push(p)
-    }
-
-    if (source)
+      // frame
+      this.timestamp = Date.now()
+    } else if (source) {
       this._copy(source);
+    }
   }
 
   deepcopy(): State {
