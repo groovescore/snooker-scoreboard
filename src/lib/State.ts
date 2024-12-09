@@ -10,7 +10,7 @@ export class State {
   // game
   readonly max_frames: number;
   private readonly max_balls: number;
-  private _break_off_pid: number = 0;
+  private break_off_pid: number = 0;
   num_frames: number = 0;
   private _game_over: boolean = false;
 
@@ -389,8 +389,8 @@ export class State {
       p.new_frame();
     }
 
-    this._break_off_pid = (this._break_off_pid + 1) % 2;
-    this.cur_pid = this._break_off_pid;
+    this.break_off_pid = (this.break_off_pid + 1) % 2;
+    this.cur_pid = this.break_off_pid;
   }
 
   can_plus_balls(): boolean {
