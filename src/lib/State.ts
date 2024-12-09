@@ -46,7 +46,8 @@ export class State {
       this._num_balls = this.max_balls;
 
       if (options.randomize && Math.random() < 0.5)
-	names.reverse();
+	this.break_off_pid = 1;
+      this.cur_pid = this.break_off_pid;
     }
 
     // frame
