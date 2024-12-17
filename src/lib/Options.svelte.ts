@@ -18,7 +18,9 @@ export class Options {
 
   num_reds: number = $derived(modes[this.mode]);
   num_frames: number = $state(-1);
-  randomize: number = $state(1);
+
+  static readonly RANDOM_FIRST_TO_BREAK = 2;
+  first_to_break: number = $state(Options.RANDOM_FIRST_TO_BREAK);
 
   constructor() {
     this.reload();
