@@ -681,6 +681,12 @@
     grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 
+  .name-input-card > * {
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .name-input {
     /* FIXME: the height is too much */
     background-color: inherit;
