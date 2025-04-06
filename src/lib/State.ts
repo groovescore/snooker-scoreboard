@@ -4,6 +4,7 @@
 import * as timeutil from './time-util.ts';
 import { Options } from './Options.svelte.ts';
 import { Player } from './Player.ts';
+import { version } from '../../package.json';
 
 export class State {
   // game
@@ -12,6 +13,7 @@ export class State {
   private break_off_pid: number = 0;
   num_frames: number = 0;
   private _game_over: boolean = false;
+  version: string = version;
 
   // frame
   timestamp: number;

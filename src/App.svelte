@@ -12,6 +12,7 @@
   import type { Player } from './lib/Player.ts';
   import type { SaveGameId } from './lib/SaveGame.svelte.ts';
   import type { SavedName } from './lib/Options.svelte.ts';
+  import { version } from '../package.json';
 
   const options: Options = $state(new Options());
 
@@ -287,12 +288,12 @@
 
     <div class='grid-container'>
       <div class='name-input-card middle {options.can_new_game() ? "" : "unavailable"}' onclick={ui_new_game}>
-	<div class='info-card-copyright' onclick={(e) => e.stopPropagation()}><a href="https://groovescore.app">&copy; 2022-2024 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
-	<div></div>
+	<div class='info-card-copyright' onclick={(e) => e.stopPropagation()}><a href="https://groovescore.app">&copy; 2022-2025 Jani Nikula<br>License: AGPL 3.0 or later &#x1f517;</a></div>
 	<div>GrooveScore</div>
 	<div>Snooker</div>
 	<div>Scoreboard</div>
 	<div></div>
+	<div>Version {version}</div>
 	<div class='card-button'>New game</div>
       </div>
       {#each options.names as player_name (player_name.id)}
@@ -325,19 +326,28 @@
       {/each}
 
       {#each savegame.saved_games as save_game, index (save_game.slot) }
-	<div class='info-card {save_game.timestamp ? "" : "unavailable"}' onclick={() => ui_load_game(save_game)}>
+	<div class='info-card {save_game.timestamp && version == save_game.version ? "" : "unavailable"}' onclick={() => ui_load_game(save_game)}>
 	  <div>Game save {index}</div>
 	  <div></div>
 	  {#if save_game.timestamp}
 	    <div>Started</div>
 	    <div>{timeutil.format_date(save_game.timestamp)}</div>
 	    <div>{timeutil.format_time(save_game.timestamp)}</div>
+	    {#if version != save_game.version}
+	      {#if save_game.version}
+		<div>For version {save_game.version}</div>
+	      {:else}
+		<div>For old version</div>
+	      {/if}
+	    {:else}
+	      <div></div>
+	    {/if}
 	  {:else}
 	    <div></div>
 	    <div></div>
 	    <div></div>
+	    <div></div>
 	  {/if}
-	  <div></div>
 	  <div class='card-button'>Load game</div>
 	</div>
       {/each}
