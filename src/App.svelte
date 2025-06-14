@@ -369,6 +369,9 @@
 		{:else}
 		  <div></div>
 		{/if}
+	      {:else if options.play_league_match}
+		<div>Fetching matches...</div>
+		<div></div>
 	      {:else}
 		<div></div>
 		<div></div>
