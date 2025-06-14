@@ -68,6 +68,12 @@ export class Game {
     this.save();
   }
 
+  pot_free_ball(): void {
+    this._push();
+    this.state.pot_free_ball();
+    this.save();
+  }
+
   plus_balls(): void {
     this._push();
     this.state.plus_balls();

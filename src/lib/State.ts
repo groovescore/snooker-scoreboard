@@ -264,10 +264,12 @@ export class State {
     return this.num_reds() > 0;
   }
 
-  private _pot_red(): void {
+  private _pot_red(free_ball: boolean = false): void {
     console.assert(this._can_pot_red());
 
-    this._num_balls--;
+    if (!free_ball)
+      this._num_balls--;
+
     this.red = true;
 
     this._pot_points(1);
@@ -294,10 +296,10 @@ export class State {
     return value === this._ball_on_value();
   }
 
-  private _pot_color(value: number): void {
+  private _pot_color(value: number, free_ball: boolean = false): void {
     console.assert(this._can_pot_color(value));
 
-    if (this.num_reds() === 0 && !this.red)
+    if (this.num_reds() === 0 && !this.red && !free_ball)
       this._num_balls--;
 
     this.red = false;
@@ -324,6 +326,31 @@ export class State {
       this._pot_red();
     else
       this._pot_color(value);
+  }
+
+  free_ball_value(): number {
+    if (!this.can_pot_free_ball())
+      return 0;
+
+    return this._ball_on_value();
+  }
+
+  can_pot_free_ball(): boolean {
+    if (this._is_frame_over() || this.respot_black)
+      return false;
+
+    return this.foul;
+  }
+
+  pot_free_ball(): void {
+    let value: number = this.free_ball_value();
+
+    console.log('pot free ball: ' + value)
+
+    if (value === 1)
+      this._pot_red(true);
+    else
+      this._pot_color(value, true);
   }
 
   can_commit_foul(value: number): boolean {
