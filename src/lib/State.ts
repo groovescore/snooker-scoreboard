@@ -273,6 +273,17 @@ export class State {
     this._pot_points(1);
   }
 
+  private _ball_on_value(): number {
+    // This function doesn't make sense for color after a red
+    if (this.red)
+      return 0;
+
+    if (this.num_reds() > 0)
+      return 1;
+
+    return 7 + 1 - this.num_colors();
+  }
+
   private _can_pot_color(value: number): boolean {
     if (this.red)
       return true;
@@ -280,7 +291,7 @@ export class State {
     if (this.num_reds() > 0)
       return false;
 
-    return this.num_colors() - (7 - value + 1) === 0;
+    return value === this._ball_on_value();
   }
 
   private _pot_color(value: number): void {
