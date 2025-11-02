@@ -32,6 +32,13 @@ Features
 
 * Currently works best in tablet size screens in landscape.
 
+Three-Player Snooker
+--------------------
+
+Looking for a three-player version? See `Piste on Piste`_.
+
+.. _Piste on Piste: https://pop.groovescore.app
+
 License
 -------
 

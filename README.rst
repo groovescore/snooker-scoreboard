@@ -18,6 +18,13 @@ The scoreboard app is a single-page application written in TypeScript and
 
 .. _development version: https://groovescore.app/main
 
+Three-Player Snooker
+--------------------
+
+Looking for a three-player version? See `Piste on Piste`_.
+
+.. _Piste on Piste: https://github.com/groovescore/piste-on-piste
+
 License
 -------
 
