@@ -11,8 +11,11 @@ export type SaveGameId = {
 
 export class SaveGame {
   saved_games: SaveGameId[] = $state();
+  private static _savename: string;
 
-  constructor() {
+  // Note: saveprefix is stored in a static class variable!
+  constructor(saveprefix: string) {
+    SaveGame._savename = `${saveprefix}-save`;
     this.reload();
   }
 
@@ -49,7 +52,7 @@ export class SaveGame {
   }
 
   private static save_game_name(slot: number): string {
-    return `groovescore-save-${slot}`;
+    return `${SaveGame._savename}-${slot}`;
   }
 
   static save(undo_stack: State[], slot: number): void {
