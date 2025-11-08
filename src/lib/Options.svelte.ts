@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-// SPDX-FileCopyrightText: 2022 Jani Nikula <jani@nikula.org>
+// SPDX-FileCopyrightText: 2024 Jani Nikula <jani@nikula.org>
 
 export type SavedName = {
   id: number;
@@ -10,7 +10,7 @@ export type SavedName = {
 const modes: number[] = [6, 10, 15];
 
 export class Options {
-  names: SavedName[] = $state();
+  names: SavedName[] = $state([]);
   private _savename: string;
 
   readonly mode_min: number = 0;
