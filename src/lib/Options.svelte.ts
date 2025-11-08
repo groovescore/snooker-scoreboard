@@ -11,6 +11,7 @@ const modes: number[] = [6, 10, 15];
 
 export class Options {
   names: SavedName[] = $state();
+  private _savename: string;
 
   readonly mode_min: number = 0;
   readonly mode_max: number = modes.length - 1;
@@ -22,7 +23,8 @@ export class Options {
   static readonly RANDOM_FIRST_TO_BREAK = 2;
   first_to_break: number = $state(Options.RANDOM_FIRST_TO_BREAK);
 
-  constructor() {
+  constructor(saveprefix: string) {
+    this._savename = `${saveprefix}-names`;
     this.reload();
   }
 
@@ -42,7 +44,7 @@ export class Options {
 
   // load names from local storage
   private _load(): SavedName[] {
-    let names_json = localStorage.getItem('groovescore-names');
+    let names_json = localStorage.getItem(this._savename);
     if (!names_json)
       return null;
 
@@ -59,7 +61,7 @@ export class Options {
   }
 
   save(): void {
-    localStorage.setItem('groovescore-names', JSON.stringify(this.names));
+    localStorage.setItem(this._savename, JSON.stringify(this.names));
   }
 
   valid_name(sn: SavedName): boolean {

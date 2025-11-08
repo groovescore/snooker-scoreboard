@@ -14,13 +14,15 @@
   import type { SavedName } from './lib/Options.svelte.ts';
   import { version } from '../package.json';
 
-  const options: Options = $state(new Options());
+  const saveprefix: string = 'groovescore';
+
+  const options: Options = $state(new Options(saveprefix));
 
   const savegame: SaveGame = $state(new SaveGame());
 
   const game: Game = $state(new Game());
 
-  const fullscreen: Fullscreen = new Fullscreen(document.documentElement, 'groovescore');
+  const fullscreen: Fullscreen = new Fullscreen(document.documentElement, saveprefix);
 
   function ui_toggle_fullscreen() {
     fullscreen.toggle();
