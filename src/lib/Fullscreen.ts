@@ -18,9 +18,11 @@ declare global {
 
 export class Fullscreen {
   private _elem: Element;
+  private _savename: string;
 
-  constructor(elem: Element) {
+  constructor(elem: Element, saveprefix: string) {
     this._elem = elem;
+    this._savename = `${saveprefix}-fullscreen`;
   }
 
   private _enabled(): boolean {
@@ -64,11 +66,11 @@ export class Fullscreen {
   }
 
   private _save(enable: boolean): void {
-    localStorage.setItem('groovescore-fullscreen', JSON.stringify(enable));
+    localStorage.setItem(this._savename, JSON.stringify(enable));
   }
 
   load(): void {
-    const fullscreen_json = localStorage.getItem('groovescore-fullscreen');
+    const fullscreen_json = localStorage.getItem(this._savename);
     if (!fullscreen_json)
       return
 
