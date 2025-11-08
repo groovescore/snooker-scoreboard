@@ -16,7 +16,7 @@
 
   const saveprefix: string = 'groovescore';
 
-  const options: Options = $state(new Options(saveprefix));
+  const options: Options = $state(new Options(saveprefix, 2));
 
   const savegame: SaveGame = $state(new SaveGame());
 
