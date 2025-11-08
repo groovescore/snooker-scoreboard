@@ -212,10 +212,6 @@
 	}
       }
       break;
-    case 'Escape':
-      if (ui_page == UiPage.EDIT)
-	ui_goto_play_page();
-      break;
     case ' ':
       if (game.state.can_end_turn())
 	game.end_turn();
