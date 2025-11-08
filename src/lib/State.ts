@@ -44,7 +44,7 @@ export class State {
       this.max_balls = options.num_reds + 6;
       this._num_balls = this.max_balls;
 
-      if (options.first_to_break == Options.RANDOM_FIRST_TO_BREAK)
+      if (options.randomize)
 	this.break_off_pid = Math.random() < 0.5 ? 0 : 1;
       else
 	this.break_off_pid = options.first_to_break;
