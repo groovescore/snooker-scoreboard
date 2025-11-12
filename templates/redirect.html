@@ -1,0 +1,30 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: 2025 Jani Nikula <jani@nikula.org> -->
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Redirecting...</title>
+    <meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate'/>
+    <meta http-equiv='Pragma' content='no-cache'/>
+    <meta http-equiv='Expires' content='0'/>
+    {% if javascript %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+	const link = document.querySelector('a.redirect-target');
+	if (link) {
+          const target = link.href;
+          const extra = window.location.search + window.location.hash;
+          const finalUrl = target + (target.includes('?') ? extra.replace(/^\?/, '&') : extra);
+          location.replace(finalUrl);
+	}
+      });
+    </script>
+    {% else %}
+    <meta http-equiv='Refresh' content='0; url={{ target }}'/>
+    {% endif %}
+  </head>
+  <body>
+    <p>Redirecting... <a class='redirect-target' href='{{ target }}'>click here if not redirected</a></p>
+  </body>
+</html>
