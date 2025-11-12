@@ -33,8 +33,11 @@
     padding: 0;
     background: transparent;
   }
+  dialog:focus {
+    outline: none;
+  }
   dialog::backdrop {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
   }
   dialog[open] {
     animation: zoom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
